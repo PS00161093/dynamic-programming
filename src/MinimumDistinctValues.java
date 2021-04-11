@@ -23,8 +23,7 @@ public class MinimumDistinctValues {
         }
 
         List<Helper> list = new ArrayList<>();
-        for (Map.Entry<Integer, Integer> e : map.entrySet())
-            list.add(new Helper(e.getKey(), e.getValue()));
+        map.forEach((key, value) -> list.add(new Helper(key, value)));
         Collections.sort(list);
 
         while (k > 0) {
