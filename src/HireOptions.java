@@ -2,6 +2,9 @@ package src;
 
 import static java.util.Arrays.sort;
 
+/**
+ * Problem URL: https://aonecode.com/oa-shopping-options
+ */
 public class HireOptions {
 
     public static void main(String[] args) {
