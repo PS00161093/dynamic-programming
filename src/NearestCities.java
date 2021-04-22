@@ -9,6 +9,7 @@ import java.util.TreeMap;
 
 /**
  * Problem URL: https://aonecode.com/amazon-online-assessment-nearest-cities
+ * <p>
  */
 public class NearestCities {
 
@@ -50,15 +51,17 @@ public class NearestCities {
             List<String> matchingPoints = new ArrayList<>();
 
             for (Map.Entry<String, List<Integer>> e : map.entrySet()) {
-                boolean xMatching = false;
-                boolean yMatching = false;
-                if (e.getValue().get(0).intValue() == find.get(0).intValue()) xMatching = true;
-                if (e.getValue().get(1).intValue() == find.get(1).intValue()) yMatching = true;
 
-                if (xMatching && yMatching) {
-                } else if (xMatching || yMatching) {
-                    matchingPoints.add(e.getKey());
+                if (!e.getKey().equalsIgnoreCase(s)) {
+
+                    boolean xMatching = false;
+                    boolean yMatching = false;
+                    if (e.getValue().get(0).intValue() == find.get(0).intValue()) xMatching = true;
+                    if (e.getValue().get(1).intValue() == find.get(1).intValue()) yMatching = true;
+                    if (xMatching || yMatching) matchingPoints.add(e.getKey());
+
                 }
+
             }
 
             TreeMap<Integer, String> fMap = new TreeMap<>();
