@@ -4,6 +4,9 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+/**
+ * Problem URL: https://leetcode.com/problems/longest-substring-without-repeating-characters/
+ */
 public class LongestUniqueSubString {
 
     public static void main(String[] args) {
