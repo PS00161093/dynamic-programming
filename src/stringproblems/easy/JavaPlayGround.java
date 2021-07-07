@@ -1,9 +1,19 @@
 package playground;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
+
+import static java.lang.String.join;
+import static java.util.Arrays.stream;
+import static java.util.Objects.hash;
+import static java.util.stream.Collectors.toSet;
 
 public class JavaPlayGround {
     public static void main(String[] args) {
+
+        //input
         List<String> inputs = new ArrayList<>();
         inputs.add("Is it Sunny");
         inputs.add("Sunny it is");
@@ -11,54 +21,80 @@ public class JavaPlayGround {
         inputs.add("hello world");
         inputs.add("Sunny it is");
 
-        //iterating it backwards because, last seen string is needed
-        Set<Input> unique = new LinkedHashSet<>();
-        for (int i = inputs.size() - 1; i >= 0; i--) {
-            String s = inputs.get(i);
-            unique.add(new Input(s));
-        }
+        /**
+         * Iterating it backwards because, last seen string is needed.
+         * When unique.add() is called, since it's a set, it will check if the given statement is already present or not.
+         * To check that, first hasCode() will be called & then equals().
+         * After, the loop completion unique, will have only those statements which are different & if 2 or more are same.
+         * then only, the last seen will present.
+         */
+        Set<Statement> unique = new LinkedHashSet<>();
+        for (int i = inputs.size() - 1; i >= 0; i--) unique.add(new Statement(inputs.get(i)));
 
-        for (Input i : unique) System.out.println(i.getStr());
+        //output
+        for (Statement i : unique) System.out.println(i.getStatement());
     }
 }
 
-class Input {
-    private final String str;
+/**
+ * Class holds the logic to check if 2 statements are same or not
+ */
+class Statement {
 
-    public Input(String str) {
-        this.str = str;
+    private final String statement;
+
+    public Statement(String statement) {
+        this.statement = statement;
     }
 
+    /**
+     * Overriding hashCode() & equals() method, to accommodate our requirements of equality
+     *
+     * @param otherStatement other statement
+     * @return true, if statements are of same length & both statement has same words
+     */
     @Override
-    public boolean equals(Object otherInput) {
-        if (this == otherInput) return true;
-        if (!(otherInput instanceof Input)) return false;
-        Input input = (Input) otherInput;
+    public boolean equals(Object otherStatement) {
+        if (this == otherStatement) return true;
+        if (!(otherStatement instanceof Statement)) return false;
+        Statement statement = (Statement) otherStatement;
 
-        return hasSameWords(input);
+        return hasSameLength(statement) && hasSameWords(statement);
     }
 
-    private boolean hasSameWords(Input otherInput) {
-        List<String> thisWords = new ArrayList<>();
-        for (String s : this.str.split(" ")) thisWords.add(s.toLowerCase());
-        List<String> otherWords = new ArrayList<>();
-        for (String s : otherInput.str.split(" ")) otherWords.add(s.toLowerCase());
-        thisWords.removeAll(otherWords);
-
-        return thisWords.isEmpty();
+    private boolean hasSameLength(Statement statement) {
+        return this.statement.length() == statement.statement.length();
     }
 
+    /**
+     * @param otherStatement other Statement
+     * @return true is both statements have same list of words
+     * <p>
+     * splitting this statement -> adding it to set (collection which holds unique values),
+     * then splitting otherStatement -> checking if that word is present or not, if not return false
+     */
+    private boolean hasSameWords(Statement otherStatement) {
+        return stream(otherStatement.statement.split(" "))
+                .allMatch(word -> stream(this.statement.split(" "))
+                        .map(String::toLowerCase)
+                        .collect(toSet())
+                        .contains(word.toLowerCase())
+                );
+    }
+
+    /**
+     * @return int
+     * calculating hashcode after removing any duplicate word
+     */
     @Override
     public int hashCode() {
-        List<String> list = new ArrayList<>();
-        for (String s : str.split(" ")) list.add(s.toLowerCase());
-        Collections.sort(list);
-        StringBuilder op = new StringBuilder();
-        for (String s : list) op.append(s);
-        return Objects.hash(op.toString());
+        return hash(join("", stream(statement.split(" "))
+                .map(String::toLowerCase)
+                .collect(toSet()))
+        );
     }
 
-    public String getStr() {
-        return this.str;
+    public String getStatement() {
+        return this.statement;
     }
 }
