@@ -10,18 +10,14 @@ import java.util.List;
 public class CacheMiss {
 
     public static void main(String[] args) {
-
-        int num = 6;
         Integer[] arr = {8, 3, 6, 2, 8, 8, 2, 6, 6, 7};
         int maxCacheSize = 2;
 
         List<Integer> pages = Arrays.asList(arr);
-        System.out.println(lruCacheMisses(num, pages, maxCacheSize));
-
+        System.out.println(lruCacheMisses(pages, maxCacheSize));
     }
 
-    public static int lruCacheMisses(int num, List<Integer> pages, int maxCacheSize) {
-
+    public static int lruCacheMisses(List<Integer> pages, int maxCacheSize) {
         int cacheMissCount = 0;
         List<Integer> cache = new ArrayList<>(maxCacheSize);
 
@@ -33,7 +29,6 @@ public class CacheMiss {
                 if (cache.contains(page)) cache.remove((Integer) page);
                 else cacheMissCount++;
             }
-
             cache.add(page);
         }
 
