@@ -8,15 +8,12 @@ import static java.lang.Math.max;
 public class IntersectionBlocks {
 
     public static void main(String[] args) {
-
         int[] WELane = {2, 3};
         int[] NSLane = {2};
-
         System.out.println(intersectionArea(WELane, NSLane));
     }
 
     public static int intersectionArea(int[] WELane, int[] NSLane) {
-
         int WEContinuousLanes = 1;
         int WEMaxContinuousLanes = WEContinuousLanes;
         for (int i = 0; i < WELane.length - 1; i++) {

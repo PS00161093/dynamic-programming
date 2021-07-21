@@ -6,26 +6,24 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static java.util.Collections.*;
+
 public class MinimumDistinctValues {
 
     public static void main(String[] args) throws java.text.ParseException {
-
         int[] arr = {1, 1, 2, 4, 4, 3, 3, 3, 5};
         System.out.println(minDistinctValues(arr, 4));
     }
 
     public static int minDistinctValues(int[] array, int k) {
-
         Map<Integer, Integer> map = new HashMap<>();
         for (int n : array) {
             if (map.containsKey(n)) map.put(n, map.get(n) + 1);
             else map.put(n, 1);
         }
-
         List<Helper> list = new ArrayList<>();
         map.forEach((key, value) -> list.add(new Helper(key, value)));
-        Collections.sort(list);
-
+        sort(list);
         while (k > 0) {
             k = k - list.get(0).occurrence;
             if (k < 0) break;
@@ -47,7 +45,6 @@ class Helper implements Comparable<Helper> {
     }
 
     public int compareTo(Helper helper) {
-
         return this.occurrence - helper.occurrence;
     }
 }

@@ -8,11 +8,8 @@ import java.util.List;
 public class RuleMatch {
 
     public int countMatches(List<List<String>> items, String ruleKey, String ruleValue) {
-
         int matchingCount = 0;
-
         for (List<String> l : items) {
-
             if ("type".equalsIgnoreCase(ruleKey) && l.get(0).equalsIgnoreCase(ruleValue)
                     || "color".equalsIgnoreCase(ruleKey) && l.get(1).equalsIgnoreCase(ruleValue)
                     || "name".equalsIgnoreCase(ruleKey) && l.get(2).equalsIgnoreCase(ruleValue))
@@ -21,6 +18,5 @@ public class RuleMatch {
         }
 
         return matchingCount;
-
     }
 }

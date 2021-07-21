@@ -18,7 +18,6 @@ import static java.util.stream.IntStream.range;
 public class NearestCities {
 
     public static void main(String[] args) {
-
         int numOfPoints = 6;
         String[] points = {"green", "yellow", "red", "blue", "grey", "pink"};
         int[] xCoordinates = {10, 20, 15, 30, 10, 15};
@@ -37,19 +36,14 @@ public class NearestCities {
                                              int[] yCoordinates,
                                              int numOfQueriedPoints,
                                              String[] queriedPoints) {
-
         String[] res = new String[numOfQueriedPoints];
         int index = 0;
-
         Map<String, List<Integer>> pointsCoOrdinateMap = mapPointsToCoOrdinates(points, xCoordinates, yCoordinates);
-
         for (String queriedPoint : queriedPoints) {
-
             List<Integer> queriedPointCoOrdinates = pointsCoOrdinateMap.get(queriedPoint);
             List<String> matchingPoints = new ArrayList<>();
             findMatchingPoints(pointsCoOrdinateMap, queriedPoint, queriedPointCoOrdinates, matchingPoints);
             TreeMap<Integer, String> sortedMap = sortByNearestPoint(pointsCoOrdinateMap, queriedPointCoOrdinates, matchingPoints);
-
             if (sortedMap.isEmpty()) res[index] = null;
             else res[index] = sortedMap.firstEntry().getValue();
             index++;
@@ -61,7 +55,6 @@ public class NearestCities {
     private static TreeMap<Integer, String> sortByNearestPoint(Map<String, List<Integer>> map,
                                                                List<Integer> find,
                                                                List<String> matchingPoints) {
-
         return matchingPoints.stream().collect(toMap(mp ->
                         abs(map.get(mp).get(0) - find.get(0)) + abs(map.get(mp).get(1) - find.get(1)),
                 mp -> mp, (a, b) -> b, TreeMap::new));
@@ -71,7 +64,6 @@ public class NearestCities {
                                            String queriedPoint,
                                            List<Integer> find,
                                            List<String> matchingPoints) {
-
         map.forEach((key, value) -> {
             if (!key.equalsIgnoreCase(queriedPoint) &&
                     (compareCoOrdinate(find, value, 0) || compareCoOrdinate(find, value, 1)))
@@ -80,14 +72,12 @@ public class NearestCities {
     }
 
     private static boolean compareCoOrdinate(List<Integer> find, List<Integer> in, int index) {
-
         return in.get(index).intValue() == find.get(index).intValue();
     }
 
     private static Map<String, List<Integer>> mapPointsToCoOrdinates(String[] points,
                                                                      int[] xCoordinates,
                                                                      int[] yCoordinates) {
-
         return range(0, points.length).boxed().collect(toMap(i -> points[i], i ->
                 asList(xCoordinates[i], yCoordinates[i]), (a, b) -> b));
     }

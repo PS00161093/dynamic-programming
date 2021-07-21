@@ -8,14 +8,11 @@ import static java.lang.Math.max;
 public class LongestPalindromeSubString {
 
     public static void main(String[] args) {
-
         System.out.println(getLongestPalindromeSubString("bb"));
     }
 
     public static String getLongestPalindromeSubString(String s) {
-
         if (s == null || s.length() < 1) return "";
-
         int startIndex = 0;
         int endIndex = 0;
         for (int i = 0; i < s.length(); i++) {
@@ -30,10 +27,8 @@ public class LongestPalindromeSubString {
     }
 
     private static int expandAroundCenter(String s, int left, int right) {
-
         int tempLeft = left;
         int tempRight = right;
-
         while (tempLeft >= 0 && tempRight < s.length() && s.charAt(tempLeft) == s.charAt(tempRight)) {
             tempLeft--;
             tempRight++;
