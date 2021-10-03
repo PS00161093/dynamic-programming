@@ -1,35 +1,42 @@
 package src.stringproblems;
 
 import java.util.Arrays;
+import java.util.TreeMap;
+import java.util.stream.Collectors;
 
+import static java.util.Arrays.*;
+import static java.util.stream.Collectors.*;
+
+/**
+ * https://leetcode.com/problems/longest-common-prefix/
+ */
 public class CommonPrefix {
 
     public static void main(String[] args) {
-        String[] arr = {"flower", "flower", "flower", "flowe"};
-        System.out.println(longestCommonPrefix(arr));
+        String[] arr = {"cir", "car"};
+        System.out.println(longestCommonPrefix1(arr));
     }
 
-    public static String longestCommonPrefix(String[] strs) {
-        String result = "";
-        if (strs.length == 0) return result;
+    public static String longestCommonPrefix1(String[] strs) {
 
-        String firstWord = strs[0];
-        if (firstWord.equals("") || firstWord.equals(" ")) return result;
+        String smallest = stream(strs).collect(toMap(String::length, s -> s, (a, b) -> b, TreeMap::new)).firstEntry().getValue();
+
+        int preFixLen = 0;
         int index = 0;
-        String prefix = String.valueOf(firstWord.charAt(index));
-        while (check(strs, prefix)) {
-            result = prefix;
-            index = index + 1;
-            if (firstWord.length() == 1) break;
-            else if (index >= 0 && index <= firstWord.length()) prefix = firstWord.substring(0, index);
+        int flag;
+
+        while (index < smallest.length()) {
+            flag = 0;
+            for (String s : strs) {
+                if (s.charAt(index) == smallest.charAt(index)) {
+                    flag++;
+                }
+            }
+            index++;
+            if (flag == strs.length) preFixLen++;
             else break;
         }
 
-        return result;
-    }
-
-    public static boolean check(String[] strs, String prefix) {
-
-        return Arrays.stream(strs).allMatch(s -> s.startsWith(prefix));
+        return smallest.substring(0, preFixLen);
     }
 }
