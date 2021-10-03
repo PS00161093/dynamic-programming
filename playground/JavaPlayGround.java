@@ -21,13 +21,6 @@ public class JavaPlayGround {
         inputs.add("hello world");
         inputs.add("Sunny it is");
 
-        /**
-         * Iterating it backwards because, last seen string is needed.
-         * When unique.add() is called, since it's a set, it will check if the given statement is already present or not.
-         * To check that, first hasCode() will be called & then equals().
-         * After, the loop completion unique, will have only those statements which are different & if 2 or more are same.
-         * then only, the last seen will present.
-         */
         Set<Statement> unique = new LinkedHashSet<>();
         for (int i = inputs.size() - 1; i >= 0; i--) unique.add(new Statement(inputs.get(i)));
 
@@ -39,13 +32,7 @@ public class JavaPlayGround {
 /**
  * Class holds the logic to check if 2 statements are same or not
  */
-class Statement {
-
-    private final String statement;
-
-    public Statement(String statement) {
-        this.statement = statement;
-    }
+record Statement(String statement) {
 
     /**
      * Overriding hashCode() & equals() method, to accommodate our requirements of equality
@@ -56,8 +43,7 @@ class Statement {
     @Override
     public boolean equals(Object otherStatement) {
         if (this == otherStatement) return true;
-        if (!(otherStatement instanceof Statement)) return false;
-        Statement statement = (Statement) otherStatement;
+        if (!(otherStatement instanceof Statement statement)) return false;
 
         return hasSameLength(statement) && hasSameWords(statement);
     }
