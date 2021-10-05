@@ -1,4 +1,4 @@
-package src.stringproblems.easy;
+package src;
 
 /**
  * https://www.hackerrank.com/challenges/strange-advertising/
